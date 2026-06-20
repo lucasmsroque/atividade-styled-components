@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const CardContainer = styled.div`
@@ -6,7 +7,6 @@ const CardContainer = styled.div`
   border: 1px solid #dee2e6;
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const NomeProduto = styled.h2`
@@ -30,7 +30,13 @@ const BotaoAdicionar = styled.button`
     props.adicionado ? '#198754' : '#6c757d'};
 `;
 
-function CardProduto({ nome, preco, adicionado }) {
+function CardProduto({ nome, preco }) {
+  const [adicionado, setAdicionado] = useState(false);
+
+  const adicionarAoCarrinho = () => {
+    setAdicionado(!adicionado);
+  };
+
   return (
     <CardContainer>
       <NomeProduto>{nome}</NomeProduto>
@@ -39,8 +45,13 @@ function CardProduto({ nome, preco, adicionado }) {
         R$ {preco.toFixed(2)}
       </PrecoProduto>
 
-      <BotaoAdicionar adicionado={adicionado}>
-        Adicionar ao carrinho
+      <BotaoAdicionar
+        adicionado={adicionado}
+        onClick={adicionarAoCarrinho}
+      >
+        {adicionado
+          ? 'Adicionado ao carrinho'
+          : 'Adicionar ao carrinho'}
       </BotaoAdicionar>
     </CardContainer>
   );
